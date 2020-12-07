@@ -1,0 +1,105 @@
+﻿@page
+@using SpecialElection.Data.Model
+@using Prototype.Data;
+@using SpecialElection.Areas.Special.Pages.ResultView;
+@model SpecialElection.Areas.Special.Pages.ResultView.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Review Election Input</h1>
+
+@foreach (Race race in Model.Election.Races)
+{
+    <br />
+    <h2>@Html.DisplayFor(model => race.Name)</h2>
+
+
+        <h3>Districtwide</h3>
+        <h4>
+            @Html.DisplayFor(model => Model.DistrictwideData[race.Id].TotalPrecinctsReporting) of @Html.DisplayFor(model => Model.DistrictwideData[race.Id].TotalNumberOfPrecinct) Precincts Reporting
+        </h4>
+
+        <table class="table" style="text-align:center;">
+            <thead>
+                <tr>
+                    <th>
+                        Display Name
+                    </th>
+                    <th>
+                        Votes
+                    </th>
+                    <th>
+                        Percent
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DistrictwideCandidateData districtwideResults in Model.DistrictwideData[race.Id].Data.Values.OrderBy(x => x.DisplayOrder))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => districtwideResults.DisplayName) (Party Preference: @Html.Raw(EnumHelper<PartyTypeEnum>.GetAbbreviation(districtwideResults.Party)))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => districtwideResults.Votes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => districtwideResults.VotePercent)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        foreach (RaceCountyData result in race.RaceCountyDataList)
+        {
+            <br />
+
+            <h3>@Html.DisplayFor(model => result.County) County</h3>
+            <h4>@Html.DisplayFor(model => result.PrecinctsReporting) of @Html.DisplayFor(model => result.NumberOfPrecinct) Precincts Reporting</h4>
+
+            <table class="table" style="text-align:center;">
+                <thead>
+                    <tr>
+                        <th>
+                            Display Name
+                        </th>
+                        <th>
+                            Votes
+                        </th>
+                        <th>
+                            Percent
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (CandidateResult candidateResult in result.CandidateResults.OrderBy(x => x.Candidate.DisplayOrder))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => candidateResult.Candidate.DisplayName) (Party Preference: @Html.Raw(EnumHelper<PartyTypeEnum>.GetAbbreviation(candidateResult.Candidate.Party)))
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => candidateResult.Votes)
+                            </td>
+                            <td>
+                                @Html.Raw(String.Format("{0:F1}", candidateResult.Percent))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    
+}
+
+<div>
+    <a asp-area="Special" asp-page="/CurrentElection/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

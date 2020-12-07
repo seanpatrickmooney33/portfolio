@@ -1,0 +1,105 @@
+﻿@page
+@model Prototype.Web.Areas.Static.Pages.Results.CandidateVoteModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>@Html.DisplayFor(model => model.VoteRecord.RaceName) : @Html.DisplayFor(Model => Model.Key.CountyType)</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].CandidateDisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].LocalVote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].LocalPartyPercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].LocalRacePercent)
+            </th>
+            @if (Model.VoteRecord.VoteResults[0].GreaterAreaVote.HasValue
+        && Model.VoteRecord.VoteResults[0].GreaterAreaPartyPercent.HasValue
+        && Model.VoteRecord.VoteResults[0].GreaterAreaPartyPercent.HasValue)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].GreaterAreaVote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].GreaterAreaPartyPercent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].GreaterAreaPartyPercent)
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.VoteRecord.VoteResults)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CandidateDisplayName)
+                    <br /> (Party Preference: @Html.Raw(EnumHelper<PartyTypeEnum>.GetAbbreviation(item.CandidateParty)))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocalVote.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocalPartyPercent.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocalRacePercent.Value)
+                </td>
+                @if (item.GreaterAreaVote.HasValue
+            && item.GreaterAreaPartyPercent.HasValue
+            && item.GreaterAreaRacePercent.HasValue)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GreaterAreaVote.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GreaterAreaPartyPercent.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GreaterAreaRacePercent.Value)
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Key.DistrictId == 0)
+{
+    <a asp-page="./CandidateVote" asp-route-id="@Html.Raw(new RedisKey(Model.Key) { CountyType = CountyTypeEnum.Statewide }.ToKey())">
+        @Html.Raw(EnumHelper<CountyTypeEnum>.GetName(CountyTypeEnum.Statewide))
+    </a>
+    <br />
+    foreach (CountyTypeEnum countyType in EnumHelper<CountyTypeEnum>.GetEnumList())
+    {
+        <a asp-page="./CandidateVote" asp-route-id="@Html.Raw(new RedisKey(Model.Key) { CountyType = countyType }.ToKey())">@Html.DisplayFor(Model => countyType)</a>
+        <br />
+    }
+
+}
+else
+{
+    <a asp-page="./CandidateVote" asp-route-id="@Html.Raw(new RedisKey(Model.Key) { CountyType = CountyTypeEnum.Statewide }.ToKey())">
+        @Html.Raw("Districtwide")
+    </a>
+    <br />
+    @if (District.DistrictInfo.ContainsKey(Model.Key.RaceType))
+    {
+        foreach (CountyTypeEnum countyType in District.DistrictInfo[Model.Key.RaceType][Model.Key.DistrictId])
+        {
+            <a asp-page="./CandidateVote" asp-route-id="@Html.Raw(new RedisKey(Model.Key) { CountyType = countyType }.ToKey())">@Html.DisplayFor(Model => countyType)</a>
+            <br />
+        }
+    }
+}

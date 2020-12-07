@@ -1,0 +1,116 @@
+﻿@page
+@using SpecialElection.Data.Model
+@model SpecialElection.Areas.Special.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h1>Currnet Election : @Html.DisplayFor(model => Model.Election.Name)</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:calc(80%);">
+                Race Name and County
+            </th>
+            <th style="text-align:center">
+                Add Result
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Election != null) {
+            @foreach (Race race in Model.Election.Races)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => race.Name)</td>
+                    <td></td>
+                </tr>
+                @foreach (RaceCountyData raceCountyData in race.RaceCountyDataList)
+                {
+                    <tr>
+                        <td style="padding-left:3em;">@Html.DisplayFor(model => raceCountyData.County)</td>
+                        <td style="text-align:center">
+
+                            <a class="inlineIcon" asp-area="Special" asp-page="/Result/Create" asp-route-raceCountyDataId="@raceCountyData.Id">
+                                <img title="Add Race Results" alt="Add Race Results" src="~/img/edit_doc_16x16.png" asp-append-version="true">
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<br/>
+
+<div style="display:flex;">
+
+    <div style="flex:1">
+        <a class="btn btn-default" asp-area="Special" asp-page="/Result/Index">
+            Preview Results
+        </a>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="GenerateRMSG" method="POST">
+            <button class="btn btn-default">
+                Generate RMSG
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="GenerateCMSG" method="POST">
+            <button class="btn btn-default">
+                Generate CMSG
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="GeneratePMSG" method="POST">
+            <button class="btn btn-default">
+                Generate PMSG
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="GenerateSMSG" method="POST">
+            <button class="btn btn-default">
+                Generate SMSG
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="GenerateVMSG" method="POST">
+            <button class="btn btn-default">
+                Generate VMSG
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="AddRandomResults" method="POST">
+            <button class="btn btn-default">
+                Random Results
+            </button>
+        </form>
+    </div>
+
+    <div style="flex:1">
+        <form asp-page-handler="AddZeroResults" method="POST">
+            <button class="btn btn-default">
+                Zero Results
+            </button>
+        </form>
+    </div>
+
+</div>
+

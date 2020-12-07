@@ -1,0 +1,60 @@
+﻿@page
+@model Prototype.Web.Areas.Static.Pages.Results.JudgeModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>
+    @Html.DisplayFor(model => model.VoteRecord.Key.ElectionType)
+@Html.DisplayFor(model => model.VoteRecord.Key.RaceType)
+@Html.DisplayFor(model => model.VoteRecord.Key.PartyType)
+@Html.DisplayFor(model => model.VoteRecord.Key.CountyType)
+@Html.DisplayFor(model => model.VoteRecord.Key.DistrictId)
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].CandidateInfo.DisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].Result.yesVotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].Result.yesPercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].Result.noVotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].Result.noPercent)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.VoteRecord.VoteResults)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CandidateInfo.DisplayName)
+                <br /> (Party Preference: @Html.Raw(EnumHelper<PartyTypeEnum>.GetAbbreviation(item.CandidateInfo.Party)))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result.yesVotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result.yesPercent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result.noVotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result.noPercent)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

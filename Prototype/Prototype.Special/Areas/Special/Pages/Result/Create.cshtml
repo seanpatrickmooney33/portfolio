@@ -1,0 +1,70 @@
+﻿@page
+@using SpecialElection.Data.Model
+@using Prototype.Data;
+@model SpecialElection.Areas.Special.Pages.ResultView.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Add Results for Race</h4>
+
+@Model.inputModel.RaceName - @Html.DisplayFor(model => model.inputModel.County)
+
+<form method="post">
+
+    <input type="hidden" asp-for="inputModel.raceCountyDataId" />
+    <div>Precincts Reporting: <input asp-for="inputModel.PrecinctsReporting"/> of @Model.inputModel.NumberOfPrecinct</div>
+
+    <table class="table" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    Candidate and Party Preference
+                </th>
+                <th>
+                    Votes (####)
+                </th>
+                <th>
+                    Percent(##.#)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.inputModel.ResultModelList.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="inputModel.ResultModelList[i].CandidateId" />
+                        @Html.DisplayFor(modelItem => Model.inputModel.ResultModelList[i].CandidateDisplayName) (Party Preference: @Html.Raw(EnumHelper<PartyTypeEnum>.GetAbbreviation(Model.inputModel.ResultModelList[i].Party)))
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input asp-for="inputModel.ResultModelList[i].Votes" class="form-control" />
+                            <span asp-validation-for="inputModel.ResultModelList[i].Votes" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input asp-for="inputModel.ResultModelList[i].Percent" class="form-control" />
+                            <span asp-validation-for="inputModel.ResultModelList[i].Percent" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+
+</form>
+<div>
+    <a asp-area="Special" asp-page="/CurrentElection/Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

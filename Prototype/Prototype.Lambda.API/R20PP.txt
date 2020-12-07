@@ -1,0 +1,8 @@
+[B|CAS|1|20200219|1246440]
+[R|CAS|2|010001000000|President Democratic|PP]
+[R|CAS|3|010002000000|President Republican|PP]
+[R|CAS|4|010003000000|President American Independent|PP]
+[R|CAS|5|010004000000|President Green|PP]
+[R|CAS|6|010005000000|President Libertarian|PP]
+[R|CAS|7|010008000000|President P and F|PP]
+[E|CAS|8|20200224|1008260]

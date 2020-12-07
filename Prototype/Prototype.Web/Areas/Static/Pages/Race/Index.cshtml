@@ -1,0 +1,74 @@
+﻿@page
+@model Prototype.Web.Areas.Static.Pages.Race.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Races</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RaceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.ElectionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.RaceType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.PartyType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.CountyType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.DistrictId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.Division)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Races[0].RedisKey.Seat)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Races) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RaceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.ElectionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.RaceType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.PartyType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.CountyType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.DistrictId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.Division)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedisKey.Seat)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.RedisKey.ToKey()">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

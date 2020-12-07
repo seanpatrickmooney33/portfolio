@@ -1,0 +1,4 @@
+[B|CAS|1|20200225|1704030]
+[R|CAS|2|110100250000|U.S. House of Representatives District 25|SE]
+[R|CAS|3|120100280000|State Senate District 28|SE]
+[E|CAS|4|20200225|1704030] 

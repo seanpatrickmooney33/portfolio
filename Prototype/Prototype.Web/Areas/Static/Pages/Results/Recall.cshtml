@@ -1,0 +1,53 @@
+﻿@page
+@model Prototype.Web.Areas.Static.Pages.Results.RecallModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>
+    @Html.DisplayFor(model => model.VoteRecord.Key.ElectionType)
+    @Html.DisplayFor(model => model.VoteRecord.Key.RaceType)
+    @Html.DisplayFor(model => model.VoteRecord.Key.PartyType)
+    @Html.DisplayFor(model => model.VoteRecord.Key.CountyType)
+    @Html.DisplayFor(model => model.VoteRecord.Key.DistrictId)
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].yesVotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].yesPercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].noVotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoteRecord.VoteResults[0].noPercent)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.VoteRecord.VoteResults)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.yesVotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.yesPercent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.noVotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.noPercent)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

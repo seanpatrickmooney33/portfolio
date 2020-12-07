@@ -1,0 +1,59 @@
+﻿@page
+@model SpecialElection.Areas.Special.Pages.PrecinctView.EditRacePrecinctsModel
+
+@{
+    ViewData["Title"] = "EditRacePrecincts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Precincts for Race : @Html.Raw(Model.Race.Name)</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RaceCountyData[0].County)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RaceCountyData[0].NumberOfPrecinct)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.RaceCountyData.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="RaceCountyData[i].Id" />
+                        <input type="hidden" asp-for="RaceCountyData[i].RaceId" value="@Model.Race.Id" />
+                        <div class="form-group">
+                            <label asp-for="RaceCountyData[i].County" class="control-label">@Html.DisplayFor(model => model.RaceCountyData[i].County)</label>
+                            <input type="hidden" asp-for="RaceCountyData[i].County" value="@Model.RaceCountyData[i].County" />
+                            <span asp-validation-for="RaceCountyData[i].County" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input asp-for="RaceCountyData[i].NumberOfPrecinct" class="form-control" />
+                            <span asp-validation-for="RaceCountyData[i].NumberOfPrecinct" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-page="../Election/Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

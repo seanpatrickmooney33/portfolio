@@ -1,0 +1,121 @@
+﻿@page
+@model SpecialElection.Areas.Special.Pages.ElectionView.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .inlineIcon {
+        flex:1;
+    }
+</style>
+
+<h1>Elections</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table" style="text-align:center;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Election[0].Name) / Race Title
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Election[0].ElectionDate)
+            </th>
+            <th>
+                Actions
+            </th>
+            <th>
+                Add/Remove
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Election)
+        {
+            <tr style="background-color:#eee">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ElectionDate)
+                </td>
+                <td>
+                    <div style="display:flex;">
+                        <form class="inlineIcon" asp-page-handler="ElectionSend" asp-route-ElectionId="@item.Id" method="POST">
+                            <button class="btn btn-default">Send</button>
+                        </form>
+
+                        <form class="inlineIcon" asp-page-handler="ElectionGet" asp-route-ElectionId="@item.Id" method="POST">
+                            <button class="btn btn-default">Get</button>
+                        </form>
+
+                        <a class="inlineIcon" asp-page="./Edit" asp-route-id="@item.Id">
+                            <img title="Edit Election" alt="Edit Election" style="padding:12px 6px;" src="~/img/calendar_alt_fill_16x16.png" asp-append-version="true">
+                        </a>
+
+                        <form class="inlineIcon" asp-page-handler="ActivateElection" asp-route-ElectionId="@item.Id" method="POST">
+                            <button class="btn btn-default">
+                                <img title="Activate Election" alt="Activate Election" src="@Html.Raw(item.IsActive ? "~/img/elect_off.png" : "~/img/elect_on.png")" asp-append-version="true">
+                            </button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <form asp-page-handler="DeleteElection" asp-route-ElectionId="@item.Id" method="POST">
+                        <button class="btn btn-default">
+                            <img title="Delete Election" alt="Delete Election" src="~/img/x_alt_16x16.png" asp-append-version="true">
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            @foreach (var race in item.Races)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => race.Name)
+                    </td>
+                    <td></td>
+                    <td>
+                        <div style="display:flex;">
+                            <!-- this empty tag is here in order to align icons with above icons-->
+                            <a class="inlineIcon" />
+                            <a class="inlineIcon" asp-page="../Race/Edit" asp-route-id="@race.Id">
+                                <img title="Edit Race" alt="Edit Race" src="~/img/document_alt_stroke_12x16.png" asp-append-version="true">
+                            </a>
+                            <a class="inlineIcon" asp-page="../Precinct/EditRacePrecincts" asp-route-RaceId="@race.Id">
+                                <img title="Edit Precinct for Race" alt="Edit Precinct for Race" src="~/img/hash_14x16.png" asp-append-version="true">
+                            </a>
+                            <a class="inlineIcon" asp-page="../Candidate/Index" asp-route-RaceId="@race.Id">
+                                <img title="Edit Candidate for Race" alt="Edit Candidate for Race" src="~/img/user_12x16.png" asp-append-version="true">
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <form asp-page-handler="DeleteRace" asp-route-RaceId="@race.Id" method="POST">
+                            <button class="btn btn-default">
+                                <img title="Delete Race" alt="Delete Race" src="~/img/x_alt_16x16.png" asp-append-version="true">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a class="inlineIcon" asp-page="../Race/Create" asp-route-ElectionId="@item.Id">
+                        <img title="Add Race to Election" alt="Add Race to Election" src="~/img/plus_alt_16x16.png" asp-append-version="true">
+                    </a>
+                </td>
+            </tr>
+        
+        }
+    </tbody>
+</table>

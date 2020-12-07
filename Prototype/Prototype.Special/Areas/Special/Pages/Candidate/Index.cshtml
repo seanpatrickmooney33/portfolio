@@ -1,0 +1,117 @@
+﻿@page
+@using Prototype.Data
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@model SpecialElection.Areas.Special.Pages.CandidateView.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Candidates for Race : @Model.RaceName</h1>
+
+<p>
+    <a asp-page="Create" asp-route-RaceId="@Model.RaceId">Create New</a>
+</p>
+
+<form method="post">
+    <input type="hidden" asp-for="RaceId" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <table class="table" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].DisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].DisplayOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].Party)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].MiddleName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Candidate[0].LastName)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Candidate.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="Candidate[i].Id" />
+                        <input type="hidden" asp-for="Candidate[i].RaceId" value="@Model.RaceId" />
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].DisplayName" class="control-label"></label>
+                            <input asp-for="Candidate[i].DisplayName" class="form-control" />
+                            <span asp-validation-for="Candidate[i].DisplayName" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].DisplayOrder" class="control-label"></label>
+                            <input asp-for="Candidate[i].DisplayOrder" class="form-control" />
+                            <span asp-validation-for="Candidate[i].DisplayOrder" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].Party" class="control-label"></label>
+                            <select style="margin-top:5px;" asp-for="Candidate[i].Party" asp-items="Html.GetEnumSelectList<PartyTypeEnum>()">
+                                <option selected="selected" value="">Please select a party</option>
+                            </select>
+                            <span asp-validation-for="Candidate[i].Party" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].FirstName" class="control-label"></label>
+                            <input asp-for="Candidate[i].FirstName" class="form-control" />
+                            <span asp-validation-for="Candidate[i].FirstName" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].MiddleName" class="control-label"></label>
+                            <input asp-for="Candidate[i].MiddleName" class="form-control" />
+                            <span asp-validation-for="Candidate[i].MiddleName" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Candidate[i].LastName" class="control-label"></label>
+                            <input asp-for="Candidate[i].LastName" class="form-control" />
+                            <span asp-validation-for="Candidate[i].LastName" class="text-danger"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-default" formmethod="post" asp-page-handler="DeleteCandidate" asp-route-CandidateId="@Model.Candidate[i].Id">
+                            <img title="Remove Candidate from Race" alt="Remove Candidate from Race" src="~/img/x_alt_16x16.png" asp-append-version="true">
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <input type="submit" asp-page-handler="SaveCandidate" class="btn btn-primary" />
+    </div>
+
+</form>
+
+<div>
+    <a asp-page="../Election/Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

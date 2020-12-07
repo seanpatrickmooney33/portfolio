@@ -1,0 +1,62 @@
+﻿@page
+@model Prototype.Web.Areas.Static.Pages.Candidate.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Candidates</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].DisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].Party)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Candidates[0].CandidateId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Candidates) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Party)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CandidateId)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.CandidateId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

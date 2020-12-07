@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Service\**" />
+    <Content Remove="Service\**" />
+    <EmbeddedResource Remove="Service\**" />
+    <None Remove="Service\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="3.1.3" />
+    <PackageReference Include="Moq" Version="4.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Prototype.Data\Prototype.Data.csproj" />
+    <ProjectReference Include="..\Prototype.Engine\Prototype.Engine.csproj" />
+    <ProjectReference Include="..\Prototype.Lambda.API\Prototype.Lambda.API.csproj" />
+    <ProjectReference Include="..\Prototype.Special\Prototype.Special.csproj" />
+    <ProjectReference Include="..\Prototype.Test.Utility\Prototype.Test.Utility.csproj" />
+  </ItemGroup>
+
+
+
+</Project>
