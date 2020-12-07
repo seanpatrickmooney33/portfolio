@@ -15,7 +15,7 @@ namespace Portfolio.Infastructure.Redis.Context
         {
             _redis = r;
         }
-        public Task SaveEntitiesAsync(CancellationToken cancellationToken)
+        public Task SaveEntitiesAsync(CancellationToken? cancellationToken)
         {
             throw new NotImplementedException();
         }

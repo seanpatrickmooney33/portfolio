@@ -8,6 +8,6 @@ namespace Portfolio.Common.Foundation
 {
     public interface IUnitOfWork
     {
-        Task SaveEntitiesAsync(CancellationToken cancellationToken);
+        Task SaveEntitiesAsync(CancellationToken? cancellationToken);
     }
 }
