@@ -1,6 +1,6 @@
 # Portfolio
 
-I have never worked directly with DDD but after several hours of research I realized that I am fimilar with many of the underlying concepts that are used to implemement DDD.
+I have never worked directly with DDD but after several hours of research I realized that I am familiar with many of the underlying concepts that are used to implemement DDD.
 I thought it would be a good challange to attempt to create a DDD solution for this presentation.
 
 The attempt did not work out too well. I had a difficult time creating a dataset that was conducive with DDD.
